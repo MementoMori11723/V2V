@@ -4,9 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V2V</title>
-    <script src="script.js"></script>
+    <script>
+        const clicked = async () => {
+            txtbox = document.getElementById("txtara")
+            // Speech to Text
+            // window.SpeechRecognition = window.webkitSpeechRecognition
+            // const recognition = new SpeechRecognition()
+
+            // After complition of speech to text
+            const text = txtbox.innerHTML
+            txtbox.innerHTML = await convert(text)
+        }
+
+        const convert = async(text) => {
+            let result
+            let url = text.replaceAll(" ","-")
+            console.log(url)
+            await fetch(`http://localhost:5000/${url}`)
+            .then(res => res.text())
+            .then(data => {
+                result = data
+            })
+            console.log(result)
+            // text to speech
+            const uttrence = new SpeechSynthesisUtterance(result)
+            uttrence.rate = 1
+            console.log(uttrence)
+            speechSynthesis.speak(uttrence)
+
+            return result
+        }
+    </script>
 </head>
 <body>
     <h1>Voice to Voice</h1>
+    <textarea id="txtara">who is isaac newton</textarea>
+    <button onclick="clicked()">Start</button>
+    <!-- <button>Convert</button> -->
 </body>
 </html>
