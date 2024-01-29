@@ -102,3 +102,15 @@ Next we need to create a html file which will be our main code
 And there you have it, you have successfully created Voice to Voice Bot.
 
 > Note : There are a few issues with speechSynthesis (it may or may not work properly).
+
+## To run this project
+
+First run this command in your terminal or command prompt from this directory.
+
+> Note : Make sure to install [bun.js](https://bun.sh/)
+
+``` bash
+    bun run index.ts
+```
+
+After running this command copy `index.html` path and past it in your browser.
