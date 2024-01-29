@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V2V</title>
-    <script>
+    <script defer>
+        var speech = true; 
+		window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; 
+		const recognition = new SpeechRecognition(); 
+		recognition.interimResults = true; 
+		const words = document.querySelector('.words');
+		recognition.addEventListener('result', e => { 
+			const transcript = Array.from(e.results) 
+				.map(result => result[0]) 
+				.map(result => result.transcript) 
+				.join('') 
+			document.getElementById("p").innerHTML = transcript;
+		});
+		if (speech == true) { 
+			recognition.start(); 
+			recognition.addEventListener('end', recognition.start); 
+		}
         const clicked = async () => {
-            txtbox = document.getElementById("txtara")
-            // Speech to Text
-            // window.SpeechRecognition = window.webkitSpeechRecognition
-            // const recognition = new SpeechRecognition()
-
-            // After complition of speech to text
+            txtbox = document.getElementById("p")
             const text = txtbox.innerHTML
             txtbox.innerHTML = await convert(text)
         }
@@ -20,26 +31,27 @@
             let result
             let url = text.replaceAll(" ","-")
             console.log(url)
-            await fetch(`http://localhost:5000/${url}`)
+            await fetch(`http://localhost:5000/${url}-under-3-lines`)
             .then(res => res.text())
             .then(data => {
                 result = data
             })
             console.log(result)
-            // text to speech
             const uttrence = new SpeechSynthesisUtterance(result)
             uttrence.rate = 1
             console.log(uttrence)
             speechSynthesis.speak(uttrence)
-
             return result
         }
     </script>
 </head>
 <body>
-    <h1>Voice to Voice</h1>
-    <textarea id="txtara">who is isaac newton</textarea>
-    <button onclick="clicked()">Start</button>
-    <!-- <button>Convert</button> -->
+    <div style="text-align: center;">
+        <h1>Voice to Voice</h1>
+        <div class="words" contenteditable>
+            <p id="p"></p>
+        </div>
+        <button onclick="clicked()">Send</button>
+    </div>
 </body>
 </html>
