@@ -12,7 +12,7 @@
     "@elysiajs/cors": "^0.8.0",
     "@elysiajs/html": "^0.8.0",
     "dotenv": "^16.4.1",
-    "elysia": "^0.8.13",
+    "elysia": "^1.1.13",
     "openai": "^4.26.0"
   }
 }

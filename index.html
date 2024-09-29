@@ -1,57 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V2V</title>
-    <script defer>
-        var speech = true; 
-		window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; 
-		const recognition = new SpeechRecognition(); 
-		recognition.interimResults = true; 
-		const words = document.querySelector('.words');
-		recognition.addEventListener('result', e => { 
-			const transcript = Array.from(e.results) 
-				.map(result => result[0]) 
-				.map(result => result.transcript) 
-				.join('') 
-			document.getElementById("p").innerHTML = transcript;
-		});
-		if (speech == true) { 
-			recognition.start(); 
-			recognition.addEventListener('end', recognition.start); 
-		}
-        const clicked = async () => {
-            txtbox = document.getElementById("p")
-            const text = txtbox.innerHTML
-            txtbox.innerHTML = await convert(text)
-        }
 
-        const convert = async(text) => {
-            let result
-            let url = text.replaceAll(" ","-")
-            console.log(url)
-            await fetch(`http://localhost:5000/${url}-under-3-lines`)
-            .then(res => res.text())
-            .then(data => {
-                result = data
-            })
-            console.log(result)
-            const uttrence = new SpeechSynthesisUtterance(result)
-            uttrence.rate = 1
-            console.log(uttrence)
-            speechSynthesis.speak(uttrence)
-            return result
-        }
-    </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="description" content="Voice to Voice" />
+  <meta name="keywords" content="Voice to Voice" />
+  <title>V2V</title>
+  <script defer>
+    var speech = true;
+    window.SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+    const words = document.querySelector(".words");
+    recognition.addEventListener("result", (e) => {
+      const transcript = Array.from(e.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join("");
+      document.getElementById("p").innerHTML = transcript;
+    });
+    if (speech == true) {
+      recognition.start();
+      recognition.addEventListener("end", recognition.start);
+    }
+    const clicked = async () => {
+      txtbox = document.getElementById("p");
+      const text = txtbox.innerHTML;
+      txtbox.innerHTML = await convert(text);
+    };
+
+    const convert = async (text) => {
+      let result;
+      let url = text.replaceAll(" ", "-");
+      console.log(url);
+      await fetch(`http://localhost:5000/${url}-under-3-lines`)
+        .then((res) => res.text())
+        .then((data) => {
+          result = data;
+        });
+      console.log(result);
+      const uttrence = new SpeechSynthesisUtterance(result);
+      uttrence.rate = 1;
+      console.log(uttrence);
+      speechSynthesis.speak(uttrence);
+      return result;
+    };
+  </script>
 </head>
+
 <body>
-    <div style="text-align: center;">
-        <h1>Voice to Voice</h1>
-        <div class="words" contenteditable>
-            <p id="p"></p>
-        </div>
-        <button onclick="clicked()">Send</button>
-    </div>
+  <div style="text-align: center">
+    <h1>Voice to Voice</h1>
+    <form action="">
+      <button>listen</button>
+      <div class="words" contenteditable>
+        <p id="p"></p>
+      </div>
+      <button onclick="clicked()">Send</button>
+    </form>
+  </div>
 </body>
+
 </html>
