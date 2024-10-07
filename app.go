@@ -2,9 +2,10 @@ package main
 
 import (
 	"V2V/client"
+	"V2V/config"
 	"V2V/server"
-	"fmt"
 	"net/http"
+	"log"
 )
 
 func main(){
@@ -12,6 +13,6 @@ func main(){
   Server := server.New()
   http.Handle("/", Client)
   http.Handle("/api/", http.StripPrefix("/api", Server))
-  fmt.Println("Server started at http://localhost:8080")
-  http.ListenAndServe(":8080", nil)
+  log.Println("Server started at http://localhost:" + config.PORT)
+  http.ListenAndServe(":"+config.PORT, nil)
 }

@@ -1,17 +1,15 @@
 package client
 
-import(
-  "net/http"
+import (
+	"V2V/config"
+	"html/template"
+	"net/http"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-  w.Write([]byte("Home"))
-}
-
-func about(w http.ResponseWriter, r *http.Request) {
-  w.Write([]byte("About"))
-}
-
-func contact(w http.ResponseWriter, r *http.Request) {
-  w.Write([]byte("Contact"))
+  temp, err := template.ParseFiles(config.Path + "index.html")
+  temp.Execute(w, nil)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+  }
 }

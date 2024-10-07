@@ -1,9 +1,10 @@
 package server
 
-import(
-  "net/http"
+import (
+	"encoding/json"
+	"net/http"
 )
 
 func api(w http.ResponseWriter, r *http.Request) {
-  w.Write([]byte("API"))
+  json.NewEncoder(w).Encode("{message: 'Hello World'}")
 }
