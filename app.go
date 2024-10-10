@@ -4,15 +4,16 @@ import (
 	"V2V/client"
 	"V2V/config"
 	"V2V/server"
-	"net/http"
 	"log"
+	"net/http"
 )
 
-func main(){
-  Client := client.New()
-  Server := server.New()
-  http.Handle("/", Client)
-  http.Handle("/api/", http.StripPrefix("/api", Server))
-  log.Println("Server started at http://localhost:" + config.PORT)
-  http.ListenAndServe(":"+config.PORT, nil)
+func main() {
+	Client := client.New()
+	Server := server.New()
+  PORT := config.GetPort()
+	http.Handle("/", Client)
+	http.Handle("/api/", http.StripPrefix("/api", Server))
+	log.Println("Server started at http://localhost:" + PORT)
+	http.ListenAndServe(":"+PORT, nil)
 }
