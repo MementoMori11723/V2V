@@ -13,6 +13,17 @@
       integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function send() {
+        console.log("send");
+      }
+      function record() {
+        console.log("record");
+      }
+      function edit() {
+        console.log("edit");
+      }
+    </script>
   </head>
 
   <body>
@@ -26,9 +37,9 @@
         accusantium nam exercitationem laudantium repudiandae qui saepe sit,
         perspiciatis ipsa ea maxime odio.
       </p>
-      <button onclick="alert('Recorded')">Record</button>
-      <button onclick="alert('Sent')">Send</button>
-      <button onclick="alert('Edited')">Edit</button>
+      <button onclick="send()">Record</button>
+      <button onclick="record()">Send</button>
+      <button onclick="edit()">Edit</button>
     </div>
   </body>
 </html>
