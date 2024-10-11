@@ -1,12 +1,12 @@
 package server
 
 import (
-	"V2V/config"
-	"bytes"
 	"encoding/json"
-	"io"
+	"V2V/config"
 	"net/http"
+	"bytes"
 	"time"
+	"io"
 )
 
 type returnMessage struct {
@@ -48,19 +48,9 @@ func getAiInfo(data string) ([]byte, error) {
 		return nil, err
 	}
 	API_KEY, URL := config.GetApiDetails()
-	req, err := http.NewRequest(
-		"POST",
-		URL,
-		bytes.NewBuffer(jsonMsg),
-	)
-	req.Header.Set(
-		"Content-Type",
-		"application/json",
-	)
-	req.Header.Set(
-		"Authorization",
-		"Bearer "+API_KEY,
-	)
+	req, err := http.NewRequest("POST",URL,bytes.NewBuffer(jsonMsg))
+	req.Header.Set("Content-Type","application/json")
+	req.Header.Set("Authorization","Bearer "+API_KEY)
 	res, err := client.Do(req)
 	if err != nil {
 		return nil, err
