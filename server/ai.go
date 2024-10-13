@@ -32,8 +32,7 @@ func getAiInfo(data string) ([]byte, error) {
 	API_KEY, URL := config.GetApiDetails()
 
 	req, err := http.NewRequest(
-    "POST", 
-    URL, 
+    "POST", URL, 
     bytes.NewBuffer(jsonMsg),
   )
 
