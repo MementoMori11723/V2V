@@ -7,7 +7,10 @@ import (
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	temp, err := template.ParseFiles(config.Path + "index.html")
+	temp, err := template.ParseFiles(
+    config.Path + 
+    "index.html",
+  )
 	if err != nil {
 		http.Error(
 			w, err.Error(),
