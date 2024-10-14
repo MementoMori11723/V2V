@@ -1,14 +1,17 @@
 package client
 
 import (
-	"V2V/config"
 	"html/template"
 	"net/http"
 )
 
+var (
+  Path = "client/pages/"
+)
+
 func home(w http.ResponseWriter, r *http.Request) {
 	temp, err := template.ParseFiles(
-    config.Path + 
+    Path + 
     "index.html",
   )
 	if err != nil {
