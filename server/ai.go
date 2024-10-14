@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func getAiInfo(data string) ([]byte, error) {
+func talkToAi(data string) ([]byte, error) {
 	client := &http.Client{
     Timeout: time.Second * 10,
   }

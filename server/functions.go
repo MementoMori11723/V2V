@@ -24,7 +24,7 @@ func api(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := getAiInfo(string(body))
+	data, err := talkToAi(string(body))
 	if err != nil {
     Error(w, err)
 		return
