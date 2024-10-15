@@ -61,7 +61,7 @@
       const data = document.getElementById("voice-input").value;
       const gptResult = document.getElementById("gpt-result");
       gptResult.innerText = "Loading...";
-      fetch("http://localhost:5000/api/", {
+      fetch("/api/", {
         method: "POST",
         headers: {
           "Content-Type": "text/plain",
