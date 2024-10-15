@@ -1,102 +1,142 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Voice to Voice" />
+    <meta name="keywords" content="Voice to Voice" />
+    <meta name="author" content="Voice to Voice" />
+    <title>Voice to Voice Bot</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="description" content="Voice to Voice" />
-  <meta name="keywords" content="Voice to Voice" />
-  <meta name="author" content="Voice to Voice" />
-  <title>Voice to Voice Bot</title>
+    <!-- here are the tools we need to use -->
+    <script
+      src="https://unpkg.com/htmx.org@2.0.3"
+      integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
 
-  <!-- here are the tools we need to use -->
-  <script src="https://unpkg.com/htmx.org@2.0.3"
-    integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
-    crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- here is our script -->
+    <script>
+      let txtarea = document.getElementById("voice-input");
+      let isRecording = false;
+      let recognition;
 
-  <!-- here is our script -->
-  <script>
-    function record() {
-      console.log("record");
-    }
-    function edit() {
-      let txtarea = document.getElement("textarea");
-      console.log("edit");
-    }
-    function send() {
-      console.log("send");
-    }
-  </script>
+      function record() {
+        const recordBtn = document.getElementById("record");
+        window.SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  <!-- here are our styles -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        if (!isRecording) {
+          recognition = new SpeechRecognition();
+          recognition.interimResults = true;
+          recognition.lang = "en-US";
+          recognition.continuous = true;
+          recognition.start();
+          isRecording = true;
+          recordBtn.innerHTML = "Stop";
 
-    div {
-      margin: 0 auto;
-      padding: 1rem;
-      max-width: 800px;
-    }
+          recognition.addEventListener("result", (e) => {
+            const transcript = Array.from(e.results)
+              .map((result) => result[0])
+              .map((result) => result.transcript)
+              .join("");
+            console.log(transcript);
+            txtarea.value = transcript;
+          });
 
-    h1 {
-      text-align: center;
-    }
+          recognition.addEventListener("end", () => {
+            if (isRecording) {
+              recognition.start();
+            }
+          });
+        } else {
+          recognition.stop();
+          isRecording = false;
+          recordBtn.innerHTML = "Record";
+        }
+      }
 
-    textarea {
-      width: 100%;
-      height: 200px;
-      margin: 1rem 0;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-    }
+      function edit() {
+        txtarea.disabled = !txtarea.disabled;
+        console.log("Edit mode enabled");
+      }
 
-    button {
-      padding: 0.5rem 1rem;
-      margin: 0.5rem;
-      border: none;
-      border-radius: 0.25rem;
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-    }
+      function send() {
+        console.log("Send");
+      }
+    </script>
 
-    button:hover {
-      background-color: #0056b3;
-    }
+    <!-- here are our styles -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    #record {
-      background-color: #f54257;
-    }
+      div {
+        margin: 0 auto;
+        padding: 1rem;
+        max-width: 800px;
+      }
 
-    #record:hover {
-      background-color: #d93d59;
-    }
-  </style>
-</head>
+      h1 {
+        text-align: center;
+      }
 
-<body>
-  <div>
-    <h1>Voice to Voice Bot</h1>
-    <label for="voice-input"></label>
-    <textarea name="voice-input" id="voice-input" disabled> </textarea>
-    <button onclick="edit()" id="edit">Edit</button>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-      expedita at veniam, pariatur aliquam provident voluptas recusandae
-      accusantium nam exercitationem laudantium repudiandae qui saepe sit,
-      perspiciatis ipsa ea maxime odio.
-    </p>
-    <button onclick="record()" id="record">Record</button>
-    <button onclick="send()" id="send">Send</button>
-  </div>
-</body>
+      textarea {
+        width: 100%;
+        height: 200px;
+        margin: 1rem 0;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+      }
 
+      button {
+        padding: 0.5rem 1rem;
+        margin: 0.5rem;
+        border: none;
+        border-radius: 0.25rem;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #record {
+        background-color: #f54257;
+      }
+
+      #record:hover {
+        background-color: #d93d59;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <h1>Voice to Voice Bot</h1>
+      <label for="voice-input"></label>
+      <textarea name="voice-input" id="voice-input" disabled> </textarea>
+      <button onclick="edit()" id="edit">Edit</button>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
+        expedita at veniam, pariatur aliquam provident voluptas recusandae
+        accusantium nam exercitationem laudantium repudiandae qui saepe sit,
+        perspiciatis ipsa ea maxime odio.
+      </p>
+      <button onclick="record()" id="record">Record</button>
+      <button onclick="send()" id="send">Send</button>
+    </div>
+  </body>
 </html>
