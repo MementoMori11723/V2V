@@ -24,6 +24,11 @@ func api(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+  if string(body) == "''" {
+    Error(w, errors.New("Please Enter some data!"))
+    return
+  }
+
 	data, err := talkToAi(string(body))
 	if err != nil {
     Error(w, err)

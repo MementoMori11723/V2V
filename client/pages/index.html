@@ -60,6 +60,11 @@
     function send() {
       const data = document.getElementById("voice-input").value;
       const gptResult = document.getElementById("gpt-result");
+      if (data === " ") {
+        console.log(data);
+        gptResult.innerText = "Please enter some text to send.";
+        return;
+      }
       gptResult.innerText = "Loading...";
       fetch("/api/", {
         method: "POST",
@@ -77,6 +82,9 @@
         })
         .catch((err) => {
           console.error(err);
+          const errorMsg = document.getElementById("error-msg");
+          errorMsg.innerHTML += "\nError: " + err;
+          errorMsg.showModal();
         });
     }
   </script>
@@ -138,6 +146,14 @@
       border-radius: 0.25rem;
       text-align: center;
     }
+
+    #error-msg {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
+      text-align: center;
+      background-color: #f8d7da;
+    }
   </style>
 </head>
 
@@ -150,6 +166,10 @@
     <button onclick="record()" id="record">Record</button>
     <button type="button" onclick="send()" id="send">Send</button>
     <p id="gpt-result">Result will be displayed here</p>
+    <dialog id="error-msg">
+      <p>An error occurred. Please try again.</p>
+      <button onclick="document.getElementById('error-msg').close()">Close</button>
+    </dialog>
   </div>
 </body>
 

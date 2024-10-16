@@ -19,7 +19,7 @@ func talkToAi(data string) ([]byte, error) {
 		Messages: []gptType{
 			{
 				Role:    "user",
-				Content: data,
+				Content: data+" in paragraph style",
 			},
 		},
 	}
