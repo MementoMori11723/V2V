@@ -1,4 +1,4 @@
-package server
+package ai
 
 import (
 	"V2V/config"
@@ -9,17 +9,27 @@ import (
 	"time"
 )
 
-func talkToAi(data string) ([]byte, error) {
+type gptType struct {
+	Role    string `json:"role"`
+	Content string `json:"content"`
+}
+
+type gptMessage struct {
+	Model    string    `json:"model"`
+	Messages []gptType `json:"messages"`
+}
+
+func Talk(data string) ([]byte, error) {
 	client := &http.Client{
-    Timeout: time.Second * 10,
-  }
+		Timeout: time.Second * 10,
+	}
 
 	msg := gptMessage{
 		Model: "gpt-4o-mini",
 		Messages: []gptType{
 			{
 				Role:    "user",
-				Content: data+" in paragraph style",
+				Content: data + " in paragraph style",
 			},
 		},
 	}
@@ -32,19 +42,19 @@ func talkToAi(data string) ([]byte, error) {
 	API_KEY, URL := config.GetApiDetails()
 
 	req, err := http.NewRequest(
-    "POST", URL, 
-    bytes.NewBuffer(jsonMsg),
-  )
+		"POST", URL,
+		bytes.NewBuffer(jsonMsg),
+	)
 
 	req.Header.Set(
-    "Content-Type", 
-    "application/json",
-  )
+		"Content-Type",
+		"application/json",
+	)
 
 	req.Header.Set(
-    "Authorization", 
-    "Bearer "+API_KEY,
-  )
+		"Authorization",
+		"Bearer "+API_KEY,
+	)
 
 	res, err := client.Do(req)
 	if err != nil {

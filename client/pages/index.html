@@ -10,151 +10,10 @@
   <meta name="author" content="Voice to Voice" />
   <title>Voice to Voice Bot</title>
 
-  <!-- here is our script -->
-  <script>
-    let isRecording = false;
-    let recognition;
-
-    function record() {
-      let txtarea = document.getElementById("voice-input");
-      const recordBtn = document.getElementById("record");
-      window.SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
-
-      if (!isRecording) {
-        recognition = new SpeechRecognition();
-        recognition.interimResults = true;
-        recognition.lang = "en-US";
-        recognition.continuous = true;
-        recognition.start();
-        isRecording = true;
-        recordBtn.innerHTML = "Stop";
-
-        recognition.addEventListener("result", (e) => {
-          const transcript = Array.from(e.results)
-            .map((result) => result[0])
-            .map((result) => result.transcript)
-            .join("");
-          console.log(transcript);
-          txtarea.value = transcript;
-        });
-
-        recognition.addEventListener("end", () => {
-          if (isRecording) {
-            recognition.start();
-          }
-        });
-      } else {
-        recognition.stop();
-        isRecording = false;
-        recordBtn.innerHTML = "Record";
-      }
-    }
-
-    function edit() {
-      let txtarea = document.getElementById("voice-input");
-      txtarea.disabled = !txtarea.disabled;
-      console.log("Edit mode enabled");
-    }
-
-    function send() {
-      const data = document.getElementById("voice-input").value;
-      const gptResult = document.getElementById("gpt-result");
-      if (data === " ") {
-        console.log(data);
-        gptResult.innerText = "Please enter some text to send.";
-        return;
-      }
-      gptResult.innerText = "Loading...";
-      fetch("/api/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain",
-        },
-        body: data,
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          console.log(data);
-          gptResult.innerText = data.message;
-        })
-        .catch((err) => {
-          console.error(err);
-          const errorMsg = document.getElementById("error-msg");
-          errorMsg.innerHTML += "\nError: " + err;
-          errorMsg.showModal();
-        });
-    }
-  </script>
-
-  <!-- here are our styles -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    div {
-      margin: 0 auto;
-      padding: 1rem;
-      max-width: 800px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    textarea {
-      width: 100%;
-      height: 200px;
-      margin: 1rem 0;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-    }
-
-    button {
-      padding: 0.5rem 1rem;
-      margin: 0.5rem;
-      border: none;
-      border-radius: 0.25rem;
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    #record {
-      background-color: #f54257;
-    }
-
-    #record:hover {
-      background-color: #d93d59;
-    }
-
-    #gpt-result {
-      margin: 1rem 0;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-      text-align: center;
-    }
-
-    #error-msg {
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-      text-align: center;
-      background-color: #f8d7da;
-    }
-  </style>
+  <!-- here is our script & style files -->
+  <script defer src="/static/js/script.js"></script>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  </link>
 </head>
 
 <body>
@@ -162,13 +21,20 @@
     <h1>Voice to Voice Bot</h1>
     <label for="voice-input"></label>
     <textarea name="voice-input" id="voice-input" disabled> </textarea>
-    <button onclick="edit()" id="edit">Edit</button>
-    <button onclick="record()" id="record">Record</button>
-    <button type="button" onclick="send()" id="send">Send</button>
+    <center>
+      <button onclick="edit()" id="edit">Edit</button>
+      <button onclick="record()" id="record">Record</button>
+      <button type="button" onclick="send()" id="send">Send</button>
+    </center>
     <p id="gpt-result">Result will be displayed here</p>
+    <center>
+      <button>Speak</button>
+    </center>
     <dialog id="error-msg">
-      <p>An error occurred. Please try again.</p>
-      <button onclick="document.getElementById('error-msg').close()">Close</button>
+      <p></p>
+      <button onclick="document.getElementById('error-msg').close()">
+        X
+      </button>
     </dialog>
   </div>
 </body>

@@ -1,11 +1,15 @@
 package server
 
-import(
-  "net/http"
+import (
+	"net/http"
 )
 
 type returnMessage struct {
 	Message string `json:"message"`
+}
+
+type errorMessage struct {
+	Error string `json:"error"`
 }
 
 type responceMessage struct {
@@ -17,18 +21,8 @@ type responceMessage struct {
 	} `json:"choices"`
 }
 
-type gptType struct {
-	Role    string `json:"role"`
-	Content string `json:"content"`
-}
-
-type gptMessage struct {
-	Model    string    `json:"model"`
-	Messages []gptType `json:"messages"`
-}
-
 func New() *http.ServeMux {
-  mux := http.NewServeMux()
-  mux.HandleFunc("POST /", api)
-  return mux
+	mux := http.NewServeMux()
+	mux.HandleFunc("POST /", api)
+	return mux
 }
