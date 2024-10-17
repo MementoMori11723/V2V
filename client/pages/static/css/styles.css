@@ -55,6 +55,7 @@ button:hover {
 }
 
 #error-msg {
+  display: flex;
   padding: 1rem;
   border: 1px solid #f54257;
   border-radius: 0.25rem;
