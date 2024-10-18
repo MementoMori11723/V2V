@@ -25,17 +25,17 @@ func api(w http.ResponseWriter, r *http.Request) {
 
 	if len(body) == 0 {
 		Error(
-      w, errors.New("No data found"),
-      http.StatusNotFound,
-    )
+			w, errors.New("no data found"),
+			http.StatusNotFound,
+		)
 		return
 	}
 
 	if string(body) == " " {
 		Error(
-      w, errors.New("Please enter some data"),
-      http.StatusNotFound,
-    )
+			w, errors.New("please enter some data"),
+			http.StatusNotFound,
+		)
 		return
 	}
 

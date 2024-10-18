@@ -5,10 +5,10 @@ import (
 )
 
 var (
-	routes = map[string]func(http.ResponseWriter, *http.Request){
+	staticDir = "client/pages/static"
+	routes    = map[string]func(http.ResponseWriter, *http.Request){
 		"/": home,
 	}
-	staticDir = "client/pages/static"
 )
 
 func New() *http.ServeMux {

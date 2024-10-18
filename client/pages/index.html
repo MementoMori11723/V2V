@@ -1,40 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Voice to Voice" />
+    <meta name="keywords" content="Voice to Voice" />
+    <meta name="author" content="Voice to Voice" />
+    <title>Voice to Voice Bot</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="description" content="Voice to Voice" />
-  <meta name="keywords" content="Voice to Voice" />
-  <meta name="author" content="Voice to Voice" />
-  <title>Voice to Voice Bot</title>
+    <!-- here is our script & style files -->
+    <script defer src="/static/js/script.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
 
-  <!-- here is our script & style files -->
-  <script defer src="/static/js/script.js"></script>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  </link>
-</head>
-
-<body>
-  <div>
-    <h1>Voice to Voice Bot</h1>
-    <label for="voice-input"></label>
-    <textarea name="voice-input" id="voice-input" disabled> </textarea>
-    <center>
-      <button onclick="edit()" id="edit">Edit</button>
-      <button onclick="record()" id="record">Record</button>
-      <button type="button" onclick="send()" id="send">Send</button>
-    </center>
-    <p id="gpt-result">Result will be displayed here</p>
-    <center>
-      <button>Speak</button>
-    </center>
-    <dialog id="error-msg">
-      <p></p><button onclick="document.getElementById('error-msg').close()">X
-      </button>
-    </dialog>
-  </div>
-</body>
-
+  <body>
+    <div>
+      <h1>Voice to Voice Bot</h1>
+      <label for="voice-input"></label>
+      <textarea name="voice-input" id="voice-input" disabled> </textarea>
+      <center>
+        <button onclick="edit()" id="edit">Edit</button>
+        <button onclick="record()" id="record">Record</button>
+        <button type="button" onclick="send()" id="send">Send</button>
+      </center>
+      <p id="gpt-result">Result will be displayed here</p>
+      <center>
+        <button>Speak</button>
+      </center>
+      <dialog id="error-msg">
+        <p></p>
+        <button onclick="document.getElementById('error-msg').close()">
+          X
+        </button>
+      </dialog>
+    </div>
+  </body>
 </html>

@@ -6,14 +6,14 @@ import (
 )
 
 var (
-  Path = "client/pages/"
+	Path = "client/pages/"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
 	temp, err := template.ParseFiles(
-    Path + 
-    "index.html",
-  )
+		Path +
+			"index.html",
+	)
 	if err != nil {
 		http.Error(
 			w, err.Error(),

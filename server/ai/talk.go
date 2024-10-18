@@ -46,6 +46,10 @@ func Talk(data string) ([]byte, error) {
 		bytes.NewBuffer(jsonMsg),
 	)
 
+	if err != nil {
+		return nil, err
+	}
+
 	req.Header.Set(
 		"Content-Type",
 		"application/json",
