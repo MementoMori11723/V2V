@@ -16,6 +16,5 @@ func New() *http.ServeMux {
 	for pattern, handler := range routes {
 		mux.HandleFunc(pattern, handler)
 	}
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(staticDir))))
 	return mux
 }
