@@ -5,7 +5,6 @@ import (
 )
 
 var (
-	staticDir = "client/pages/static"
 	routes    = map[string]func(http.ResponseWriter, *http.Request){
 		"/": home,
 	}
