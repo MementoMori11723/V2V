@@ -35,7 +35,6 @@
             .map((result) => result[0])
             .map((result) => result.transcript)
             .join("");
-          console.log(transcript);
           txtarea.value = transcript;
         });
 
@@ -88,6 +87,10 @@
           errorMsg.showModal();
         });
     }
+
+    function speak() {
+      console.log("Speak");
+    }
   </script>
 </head>
 
@@ -101,7 +104,7 @@
       <button onclick="record()" id="record">Record</button>
       <button type="button" onclick="send()" id="send">Send</button>
       <p id="gpt-result">Result will be displayed here</p>
-      <button>Speak</button>
+      <button onclick="speak()">Speak</button>
       <dialog id="error-msg">
         <p></p>
         <button onclick="document.getElementById('error-msg').close()">
