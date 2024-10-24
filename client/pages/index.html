@@ -96,22 +96,20 @@
 
 <body>
   <div>
-    <center>
-      <h1>Voice to Voice Bot</h1>
-      <label for="voice-input"></label>
-      <textarea name="voice-input" id="voice-input" disabled> </textarea><br />
-      <button onclick="edit()" id="edit">Edit</button>
-      <button onclick="record()" id="record">Record</button>
-      <button type="button" onclick="send()" id="send">Send</button>
-      <p id="gpt-result">Result will be displayed here</p>
-      <button onclick="speak()">Speak</button>
-      <dialog id="error-msg">
-        <p></p>
-        <button onclick="document.getElementById('error-msg').close()">
-          X
-        </button>
-      </dialog>
-    </center>
+    <h1>Voice to Voice Bot</h1>
+    <label for="voice-input"></label>
+    <textarea name="voice-input" id="voice-input" disabled> </textarea><br />
+    <button onclick="edit()" id="edit">Edit</button>
+    <button onclick="record()" id="record">Record</button>
+    <button type="button" onclick="send()" id="send">Send</button>
+    <p id="gpt-result">Result will be displayed here</p>
+    <button onclick="speak()">Speak</button>
+    <dialog id="error-msg">
+      <p></p>
+      <button onclick="document.getElementById('error-msg').close()">
+        X
+      </button>
+    </dialog>
   </div>
 </body>
 
