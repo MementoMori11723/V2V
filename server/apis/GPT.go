@@ -1,4 +1,4 @@
-package ai
+package apis
 
 import (
 	"V2V/config"
@@ -19,7 +19,7 @@ type gptMessage struct {
 	Messages []gptType `json:"messages"`
 }
 
-func Talk(data string) ([]byte, error) {
+func GetGPTResponce(data string) ([]byte, error) {
 	client := &http.Client{
 		Timeout: time.Second * 10,
 	}
@@ -39,7 +39,7 @@ func Talk(data string) ([]byte, error) {
 		return nil, err
 	}
 
-	API_KEY, URL := config.GetApiDetails()
+	API_KEY, URL := config.GetGptApiDetails()
 
 	req, err := http.NewRequest(
 		"POST", URL,
