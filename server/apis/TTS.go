@@ -2,6 +2,11 @@ package apis
 
 import (
 	"V2V/config"
+	"bytes"
+	"encoding/json"
+	"io"
+	"net/http"
+	"time"
 )
 
 type AudioConfig struct {
@@ -25,15 +30,14 @@ type TTSResponse struct {
 	Voice       Voice       `json:"voice"`
 }
 
-func PostRequest(URL string, data interface{}, API_KEY string) ([]byte, error) {
-  return nil, nil
-}
-
 func GetTTSResponse(data string) ([]byte, error) {
-	API_KEY, URL := config.GetTtsApiDetails()
+  client := &http.Client{
+    Timeout: time.Second * 20,
+  }
+  
   Responce := TTSResponse{
     AudioConfig: AudioConfig{
-      AudioEncoding: "LINEAR16",
+      AudioEncoding: "MP3",
       Pitch: 0,
       SpeakingRate: 1,
     },
@@ -45,8 +49,38 @@ func GetTTSResponse(data string) ([]byte, error) {
       Name: "en-US-Standard-G",
     },
   }
-  return PostRequest(
-    URL, Responce, 
-    API_KEY,
+
+	API_KEY, URL := config.GetTtsApiDetails()
+
+  jsonMsg, err := json.Marshal(Responce)
+  if err != nil {
+    return nil, err
+  }
+
+  req, err := http.NewRequest(
+    "POST", URL + "?key=" + API_KEY,
+    bytes.NewBuffer(jsonMsg),
   )
+
+  if err != nil {
+    return nil, err
+  }
+
+  req.Header.Set(
+    "Content-Type",
+    "application/json",
+  )
+
+  res, err := client.Do(req)
+  if err != nil {
+    return nil, err
+  }
+
+  defer res.Body.Close()
+  body, err := io.ReadAll(res.Body)
+  if err != nil {
+    return nil, err
+  }
+
+  return body, nil
 }

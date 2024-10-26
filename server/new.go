@@ -5,11 +5,16 @@ import (
 )
 
 type returnMessage struct {
-	Message string `json:"message"`
+	Message      string `json:"message"`
+	AudioMessage string `json:"audioMessage"`
 }
 
 type errorMessage struct {
 	Error string `json:"error"`
+}
+
+type audioMessage struct {
+  AudioContent string `json:"audioContent"`
 }
 
 type responceMessage struct {

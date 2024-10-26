@@ -25,14 +25,6 @@ func api(w http.ResponseWriter, r *http.Request) {
 
 	if len(body) == 0 {
 		Error(
-			w, errors.New("no data found"),
-			http.StatusNotFound,
-		)
-		return
-	}
-
-	if string(body) == " " {
-		Error(
 			w, errors.New("please enter some data"),
 			http.StatusNotFound,
 		)
@@ -53,8 +45,22 @@ func api(w http.ResponseWriter, r *http.Request) {
 	}
 
 	content := result.Choices[0].Message.Content
+	audioFile, err := apis.GetTTSResponse(content)
+	if err != nil {
+		Error(w, err, http.StatusNotFound)
+		return
+	}
+
+	var audio audioMessage
+	err = json.Unmarshal(audioFile, &audio)
+	if err != nil {
+		Error(w, err, http.StatusNotFound)
+		return
+	}
+
 	err = json.NewEncoder(w).Encode(returnMessage{
-		Message: content,
+		Message:      content,
+		AudioMessage: "data:audio/mp3;base64," + audio.AudioContent,
 	})
 
 	if err != nil {

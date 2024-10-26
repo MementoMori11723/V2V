@@ -59,6 +59,7 @@
       const data = document.getElementById("voice-input").value;
       const errorMsg = document.getElementById("error-msg");
       const gptResult = document.getElementById("gpt-result");
+      const audio = document.getElementById("audio");
       gptResult.innerText = "Loading...";
       fetch("/api/", {
         method: "POST",
@@ -79,6 +80,7 @@
             return;
           }
           gptResult.innerText = data.message;
+          audio.src = data.audioMessage;
         })
         .catch((err) => {
           console.error(err.json().error);
@@ -104,6 +106,7 @@
     <button type="button" onclick="send()" id="send">Send</button>
     <p id="gpt-result">Result will be displayed here</p>
     <button onclick="speak()">Speak</button>
+    <audio id="audio" controls></audio>
     <dialog id="error-msg">
       <p></p>
       <button onclick="document.getElementById('error-msg').close()">
