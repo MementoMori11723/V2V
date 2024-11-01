@@ -12,16 +12,16 @@ func init() {
 	godotenv.Load()
 
 	GPT_API_KEY = os.Getenv("GPT_API_KEY")
-	GPT_URL = os.Getenv("GPT_URL")
+  GPT_URL = "https://api.openai.com/v1/chat/completions"
 
-	if GPT_API_KEY == "" || GPT_URL == "" {
+	if GPT_API_KEY == "" {
 		panic("GPT : API_KEY or URL is not set")
 	}
 
 	TTS_API_KEY = os.Getenv("TTS_API_KEY")
-	TTS_URL = os.Getenv("TTS_URL")
+	TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
 
-	if TTS_API_KEY == "" || TTS_URL == "" {
+	if TTS_API_KEY == "" {
 		panic("TTS : API_KEY or URL is not set")
 	}
 }

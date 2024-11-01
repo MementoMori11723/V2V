@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,8 +9,114 @@
   <meta name="keywords" content="Voice to Voice" />
   <meta name="author" content="Voice to Voice" />
   <title>Voice to Voice Bot</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-  <!-- here is our script & style files -->
+    /* Body styling */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f8f5;
+      color: #1d2d2a;
+    }
+
+    /* Container styling */
+    .container {
+      background-color: #e1f0eb;
+      padding: 25px;
+      width: 380px;
+      text-align: center;
+      border: 1px solid #c3e6d9;
+      border-radius: 8px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #0a4d3a;
+      font-size: 1.8em;
+      font-weight: 600;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 15px;
+      padding: 12px;
+      background-color: #f3faf7;
+      color: #1d2d2a;
+      border: 1px solid #c3e6d9;
+      border-radius: 6px;
+      resize: none;
+      outline: none;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    textarea:focus {
+      background-color: #eaf6f3;
+    }
+
+    button {
+      background-color: #36a079;
+      color: #ffffff;
+      padding: 8px 18px;
+      margin: 8px 4px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #58b992;
+    }
+
+    #gpt-result {
+      margin-top: 15px;
+      text-align: justify;
+      font-style: italic;
+      color: #0a4d3a;
+      min-height: 40px;
+      padding: 10px;
+      border-radius: 4px;
+      background-color: #f3faf7;
+      border: 1px solid #c3e6d9;
+    }
+
+    /* Dialog styling */
+    dialog {
+      background-color: #e1f0eb;
+      color: #1d2d2a;
+      border: 1px solid #c3e6d9;
+      padding: 15px;
+      text-align: left;
+      width: 300px;
+      border-radius: 6px;
+    }
+
+    dialog button {
+      background-color: #f08080;
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: #fff;
+      border: none;
+    }
+  </style>
+
   <script>
     let isRecording = false;
     let recognition;
@@ -28,7 +134,7 @@
         recognition.continuous = true;
         recognition.start();
         isRecording = true;
-        recordBtn.innerHTML = "Stop";
+        recordBtn.innerHTML = `<i class="fas fa-stop-circle"></i> Stop`;
 
         recognition.addEventListener("result", (e) => {
           const transcript = Array.from(e.results)
@@ -46,7 +152,7 @@
       } else {
         recognition.stop();
         isRecording = false;
-        recordBtn.innerHTML = "Record";
+        recordBtn.innerHTML = `<i class="fas fa-microphone"></i> Record`;
       }
     }
 
@@ -68,9 +174,7 @@
         },
         body: data,
       })
-        .then((res) => {
-          return res.json();
-        })
+        .then((res) => res.json())
         .then((data) => {
           console.log(data);
           if (data.error) {
@@ -83,37 +187,41 @@
           audio.src = data.audioMessage;
         })
         .catch((err) => {
-          console.error(err.json().error);
+          console.error(err);
           gptResult.innerText = "Result will be displayed here";
-          errorMsg.innerHTML += "\nError: " + err;
+          errorMsg.querySelector("p").innerText = `Error: ${err}`;
           errorMsg.showModal();
         });
     }
 
     function speak() {
-      console.log("Speak");
+      const audio = document.getElementById("audio");
+      if (audio.src) {
+        audio.play();
+      } else {
+        console.log("Speak");
+      }
     }
   </script>
 </head>
 
 <body>
-  <div>
+  <div class="container">
     <h1>Voice to Voice Bot</h1>
     <label for="voice-input"></label>
     <textarea name="voice-input" id="voice-input" disabled></textarea><br />
-    <button onclick="edit()" id="edit">Edit</button>
-    <button onclick="record()" id="record">Record</button>
-    <button type="button" onclick="send()" id="send">Send</button>
+    <button onclick="edit()" id="edit"><i class="fas fa-edit"></i> Edit</button>
+    <button onclick="record()" id="record"><i class="fas fa-microphone"></i> Record</button>
+    <button type="button" onclick="send()" id="send"><i class="fas fa-paper-plane"></i> Send</button>
     <p id="gpt-result">Result will be displayed here</p>
-    <button onclick="speak()">Speak</button>
-    <audio id="audio" controls></audio>
+    <button onclick="speak()"><i class="fas fa-volume-up"></i> Speak</button>
+    <audio id="audio"></audio>
     <dialog id="error-msg">
       <p></p>
-      <button onclick="document.getElementById('error-msg').close()">
-        X
-      </button>
+      <button onclick="document.getElementById('error-msg').close()">X</button>
     </dialog>
   </div>
 </body>
 
 </html>
+
