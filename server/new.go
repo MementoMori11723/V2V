@@ -1,33 +1,26 @@
 package server
 
 import (
+	"V2V/server/middleware"
 	"net/http"
 )
 
-type returnMessage struct {
-	Message      string `json:"message"`
-	AudioMessage string `json:"audioMessage"`
-}
+var (
+	Path   = "server/pages/"
+	routes = map[string]func(http.ResponseWriter, *http.Request){
+		"/":         home,
+		"/auth":     auth,
+		"POST /api": api,
+	}
+)
 
-type errorMessage struct {
-	Error string `json:"error"`
-}
-
-type audioMessage struct {
-  AudioContent string `json:"audioContent"`
-}
-
-type responceMessage struct {
-	ID      string `json:"id"`
-	Choices []struct {
-		Message struct {
-			Content string `json:"content"`
-		} `json:"message"`
-	} `json:"choices"`
-}
-
-func New() *http.ServeMux {
+func New() http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /", api)
-	return mux
+	assetsPath := http.StripPrefix("/assets/", http.FileServer(http.Dir(Path+"assets")))
+	mux.Handle("/assets/", assetsPath)
+	for pattern, handler := range routes {
+		mux.HandleFunc(pattern, handler)
+	}
+	newMux := middleware.Logger(mux)
+	return newMux
 }

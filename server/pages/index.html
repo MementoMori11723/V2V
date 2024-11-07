@@ -167,7 +167,7 @@
       const gptResult = document.getElementById("gpt-result");
       const audio = document.getElementById("audio");
       gptResult.innerText = "Loading...";
-      fetch("/api/", {
+      fetch("/api", {
         method: "POST",
         headers: {
           "Content-Type": "text/plain",
