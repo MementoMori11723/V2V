@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="description" content="Voice to Voice" />
+  <meta name="keywords" content="Voice to Voice" />
+  <meta name="author" content="Voice to Voice" />
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <title>{{.Title}}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .error-container {
+      margin-top: 50px;
+    }
+
+    .status-code {
+      font-size: 100px;
+      color: #e74c3c;
+    }
+
+    .message {
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="error-container">
+    <div class="status-code">{{.StatusCode}}</div>
+    <div class="message">{{.ErrorMessage}}</div>
+  </div>
+</body>
+
+</html>

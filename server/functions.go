@@ -4,6 +4,7 @@ import (
 	"V2V/server/apis"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"html/template"
 	"io"
 	"log"
@@ -13,10 +14,6 @@ import (
 type returnMessage struct {
 	Message      string `json:"message"`
 	AudioMessage string `json:"audioMessage"`
-}
-
-type errorMessage struct {
-	Error string `json:"error"`
 }
 
 type audioMessage struct {
@@ -32,25 +29,79 @@ type responceMessage struct {
 	} `json:"choices"`
 }
 
-func auth(w http.ResponseWriter, r *http.Request) {
-  w.Write([]byte("auth"))
+// Default error handler (returns JSON)
+func Error(w http.ResponseWriter, err error, statusCode int) {
+	type errorMessage struct {
+		Error string `json:"error"`
+	}
+
+	w.WriteHeader(statusCode)
+	log.Println("Error : ", err)
+
+	json.NewEncoder(w).Encode(errorMessage{
+		Error: err.Error(),
+	})
 }
 
-func home(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		http.Error(w, "404 page not found", http.StatusNotFound)
-		return
+// Default error handler (returns HTML)
+func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
+	type errorMessage struct {
+		Title        string
+		ErrorMessage string
+		StatusCode   int
 	}
+
 	temp, err := template.ParseFiles(
-		Path +
-			"index.html",
+		Path + "error.html",
 	)
+
 	if err != nil {
 		http.Error(
 			w, err.Error(),
 			http.StatusInternalServerError,
 		)
 	}
+
+	w.WriteHeader(statusCode)
+
+  data := errorMessage{
+		Title: fmt.Sprintf("%d Error", statusCode),
+		ErrorMessage: Err.Error(),
+		StatusCode:   statusCode,
+	}
+
+	if err = temp.Execute(w, data); err != nil {
+		http.Error(
+			w, err.Error(),
+			http.StatusInternalServerError,
+		)
+	}
+}
+
+// this is /auth endpoint
+func auth(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("auth"))
+}
+
+// this is / endpoint
+func home(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		HTMLError(w, errors.New("404 page not found"), http.StatusNotFound)
+		return
+	}
+
+	temp, err := template.ParseFiles(
+		Path +
+			"index.html",
+	)
+
+	if err != nil {
+		http.Error(
+			w, err.Error(),
+			http.StatusInternalServerError,
+		)
+	}
+
 	if err = temp.Execute(w, nil); err != nil {
 		http.Error(
 			w, err.Error(),
@@ -59,14 +110,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Error(w http.ResponseWriter, err error, statusCode int) {
-	w.WriteHeader(statusCode)
-  log.Println("Error : ", err)
-	json.NewEncoder(w).Encode(errorMessage{
-		Error: err.Error(),
-	})
-}
-
+// this is /api endpoint
 func api(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	defer r.Body.Close()
