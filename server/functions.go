@@ -36,11 +36,11 @@ func Error(w http.ResponseWriter, err error, statusCode int) {
 	}
 
 	w.WriteHeader(statusCode)
-	log.Println("Error : ", err)
-
 	json.NewEncoder(w).Encode(errorMessage{
 		Error: err.Error(),
 	})
+
+	log.Println("Error : ", err)
 }
 
 // Default error handler (returns HTML)
@@ -54,7 +54,6 @@ func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
 	temp, err := template.ParseFiles(
 		Path + "error.html",
 	)
-
 	if err != nil {
 		http.Error(
 			w, err.Error(),
@@ -64,8 +63,8 @@ func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
 
 	w.WriteHeader(statusCode)
 
-  data := errorMessage{
-		Title: fmt.Sprintf("%d Error", statusCode),
+	data := errorMessage{
+		Title:        fmt.Sprintf("%d Error", statusCode),
 		ErrorMessage: Err.Error(),
 		StatusCode:   statusCode,
 	}
@@ -76,11 +75,6 @@ func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
 			http.StatusInternalServerError,
 		)
 	}
-}
-
-// this is /auth endpoint
-func auth(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("auth"))
 }
 
 // this is / endpoint
@@ -94,7 +88,6 @@ func home(w http.ResponseWriter, r *http.Request) {
 		Path +
 			"index.html",
 	)
-
 	if err != nil {
 		http.Error(
 			w, err.Error(),
