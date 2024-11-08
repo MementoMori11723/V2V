@@ -1,5 +1,8 @@
 default_goal: run
 
-run:
+build:
 	@echo "Running the program..."
-	@go run .
+	@go build -ldflags="-s -w" -o app .
+
+run: build
+	@./app
