@@ -1,9 +1,8 @@
 package config
 
 import (
+	"log"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 var (
@@ -11,10 +10,10 @@ var (
 )
 
 func init() {
-	godotenv.Load()
 	PORT = os.Getenv("PORT")
 	if PORT == "" {
-		panic("PORT is not set")
+	  log.Printf("PORT is not set. Defaulting to 8080")
+    PORT = "8080"
 	}
 }
 

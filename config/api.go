@@ -2,15 +2,11 @@ package config
 
 import (
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 var GPT_API_KEY, GPT_URL, TTS_API_KEY, TTS_URL string
 
 func init() {
-	godotenv.Load()
-
 	GPT_API_KEY = os.Getenv("GPT_API_KEY")
   GPT_URL = "https://api.openai.com/v1/chat/completions"
 

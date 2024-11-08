@@ -24,7 +24,7 @@ func Logger(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(wrapperWriter, r)
 		if wrapperWriter.StatusCode != http.StatusOK {
-      log.Println(wrapperWriter.StatusCode, r.Method, r.URL, "", time.Since(start)," - Error")
+      log.Println(wrapperWriter.StatusCode, r.Method, r.URL, "", time.Since(start)," - Error : ", http.StatusText(wrapperWriter.StatusCode))
 		} else {
 			log.Println(wrapperWriter.StatusCode, r.Method, r.URL, "", time.Since(start))
 		}
