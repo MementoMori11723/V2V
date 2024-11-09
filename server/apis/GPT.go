@@ -27,6 +27,10 @@ func GetGPTResponce(data string) ([]byte, error) {
 	msg := gptMessage{
 		Model: "gpt-4o-mini",
 		Messages: []gptType{
+      {
+        Role:    "system",
+        Content: "Your name is Echo Flow, and you are a chatbot. You are designed to help users with their queries. How can I help you today?",
+      },
 			{
 				Role:    "user",
 				Content: data + " in paragraph style",

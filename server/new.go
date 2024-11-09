@@ -9,6 +9,7 @@ var (
 	Path   = "server/pages/"
 	routes = map[string]func(http.ResponseWriter, *http.Request){
 		"/":         home,
+    "/about":    about,
 		"POST /api": api,
 	}
 )

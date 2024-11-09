@@ -103,6 +103,31 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func about(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/about" {
+		HTMLError(w, errors.New("404 page not found"), http.StatusNotFound)
+		return
+	}
+
+	temp, err := template.ParseFiles(
+		Path +
+			"about.html",
+	)
+	if err != nil {
+		http.Error(
+			w, err.Error(),
+			http.StatusInternalServerError,
+		)
+	}
+
+	if err = temp.Execute(w, nil); err != nil {
+		http.Error(
+			w, err.Error(),
+			http.StatusInternalServerError,
+		)
+	}
+}
+
 // this is /api endpoint
 func api(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
