@@ -10,15 +10,37 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <style>
-      /* General Reset */
+      .sidebar,
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        height: 100%;
+      }
+
+      h2,
+      p {
+        margin-bottom: 15px;
+      }
+
+      .menu-items a,
+      .sidebar a,
+      footer a {
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .toggle-switch input:checked + .slider,
+      body.dark-mode footer {
+        background: #353238;
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Poppins", Arial, sans-serif;
+        font-family: Poppins, Arial, sans-serif;
       }
 
-      /* Body and Main Layout */
       body {
         display: flex;
         flex-direction: column;
@@ -31,13 +53,11 @@
         overflow-x: hidden;
       }
 
-      /* Dark Mode */
       body.dark-mode {
         background: linear-gradient(135deg, #353238, #2e2a27);
         color: #ecba82;
       }
 
-      /* Navbar Styling */
       .nav-content {
         display: flex;
         justify-content: space-between;
@@ -61,48 +81,45 @@
         gap: 20px;
       }
 
-      .menu-items a {
-        color: inherit;
-        text-decoration: none;
-        font-size: 1em;
-        transition: color 0.3s;
-      }
-
-      .menu-items a {
-        color: inherit;
-        text-decoration: none;
-        font-size: 1em;
-        transition: color 0.3s;
-      }
-
-      /* Hamburger Menu Icon */
-      .hamburger {
+      .hamburger,
+      .toggle-switch input[type="checkbox"] {
         display: none;
+      }
+
+      .menu-items a {
+        color: inherit;
+        font-size: 1em;
+      }
+
+      .hamburger {
         font-size: 1.5em;
-        background: none;
+        background: 0 0;
         border: none;
         color: inherit;
         cursor: pointer;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s;
+      }
+
+      .sidebar,
+      .sidebar a,
+      body.dark-mode a.email-link,
+      body.dark-mode footer,
+      body.dark-mode footer a {
+        color: #ecba82;
       }
 
       .hamburger.open i::before {
         content: "\f00d";
-        /* Font Awesome 'X' icon */
       }
 
-      /* Sidebar Overlay */
       .sidebar-overlay {
-        position: fixed;
-        top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
         background: rgba(0, 0, 0, 0.5);
         display: none;
         opacity: 0;
         z-index: 998;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.3s;
       }
 
       .sidebar-overlay.show {
@@ -110,54 +127,34 @@
         opacity: 1;
       }
 
-      /* Sidebar Menu */
       .sidebar {
-        position: fixed;
-        top: 0;
         right: -250px;
         width: 250px;
-        height: 100%;
         background: rgba(0, 0, 0, 0.9);
-        color: #ecba82;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 20px;
-        transition: right 0.3s ease;
+        transition: right 0.3s;
         z-index: 999;
         padding: 20px;
       }
 
       .sidebar.show {
         right: 0;
-        /* Slide in the sidebar */
       }
 
       .sidebar a {
-        color: #ecba82;
-        text-decoration: none;
         font-size: 1.2em;
-        transition: color 0.3s;
       }
 
-      .sidebar .toggle-switch {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-      }
-
-      /* Toggle Switch Styling */
+      .sidebar .toggle-switch,
       .toggle-switch {
         display: flex;
         align-items: center;
         gap: 10px;
         cursor: pointer;
-      }
-
-      .toggle-switch input[type="checkbox"] {
-        display: none;
       }
 
       .toggle-switch .slider {
@@ -181,16 +178,11 @@
         transition: 0.4s;
       }
 
-      .toggle-switch input:checked + .slider {
-        background: #353238;
-      }
-
       .toggle-switch input:checked + .slider::before {
         transform: translateX(20px);
         background: #ecba82;
       }
 
-      /* Responsive Design */
       @media (max-width: 768px) {
         .menu-items {
           display: none;
@@ -200,13 +192,11 @@
           display: block;
         }
 
-        /* Extra padding for mobile layout */
         .container {
           padding: 20px;
         }
       }
 
-      /* Main Container Styling */
       .container {
         max-width: 800px;
         margin: 20px auto;
@@ -214,17 +204,12 @@
         background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(10px);
         border-radius: 20px;
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       }
 
-      /* Dark Mode Support for Email Link */
       a.email-link {
         color: #353238;
         text-decoration: underline;
-      }
-
-      body.dark-mode a.email-link {
-        color: #ecba82;
       }
 
       body.dark-mode .container {
@@ -234,91 +219,67 @@
 
       h2 {
         font-size: 1.8em;
-        margin-bottom: 15px;
         color: #f2a65a;
       }
 
       p {
-        margin-bottom: 15px;
         line-height: 1.6;
+        text-align: justify;
       }
 
-      /* Footer styling */
       footer {
         text-align: center;
         padding: 15px 20px;
         background: #ecba82;
         color: #353238;
         width: 100%;
+        margin-top: auto;
       }
 
       footer a {
         color: #353238;
         margin: 0 10px;
-        text-decoration: none;
         font-size: 0.9em;
-        transition: color 0.3s;
-      }
-
-      body.dark-mode footer {
-        background: #353238;
-        color: #ecba82;
-      }
-
-      body.dark-mode footer a {
-        color: #ecba82;
       }
     </style>
     <script>
-      // Dark mode toggle with persistent state
       function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-        localStorage.setItem(
-          "darkMode",
-          document.body.classList.contains("dark-mode"),
-        );
-
-        // Sync toggle switches with dark mode state
-        document
-          .querySelectorAll(".toggle-switch input[type='checkbox']")
-          .forEach((checkbox) => {
-            checkbox.checked = document.body.classList.contains("dark-mode");
-          });
+        document.body.classList.toggle("dark-mode"),
+          localStorage.setItem(
+            "darkMode",
+            document.body.classList.contains("dark-mode"),
+          ),
+          document
+            .querySelectorAll(".toggle-switch input[type='checkbox']")
+            .forEach((e) => {
+              e.checked = document.body.classList.contains("dark-mode");
+            });
       }
-
-      // Load dark mode state from local storage
-      document.addEventListener("DOMContentLoaded", () => {
-        const isDarkMode = localStorage.getItem("darkMode") === "true";
-        if (isDarkMode) {
-          document.body.classList.add("dark-mode");
-        }
-        document
-          .querySelectorAll(".toggle-switch input[type='checkbox']")
-          .forEach((checkbox) => {
-            checkbox.checked = isDarkMode;
-          });
-      });
-
-      // Sidebar toggle
       function toggleSidebar() {
-        const sidebarOverlay = document.querySelector(".sidebar-overlay");
-        const sidebar = document.querySelector(".sidebar");
-        const hamburger = document.querySelector(".hamburger");
-
-        sidebarOverlay.classList.toggle("show");
-        sidebar.classList.toggle("show");
-        hamburger.classList.toggle("open");
+        let e = document.querySelector(".sidebar-overlay"),
+          o = document.querySelector(".sidebar"),
+          t = document.querySelector(".hamburger");
+        e.classList.toggle("show"),
+          o.classList.toggle("show"),
+          t.classList.toggle("open");
       }
-
       function closeSidebar() {
-        const sidebarOverlay = document.querySelector(".sidebar-overlay");
-        const sidebar = document.querySelector(".sidebar");
-        const hamburger = document.querySelector(".hamburger");
-
-        sidebarOverlay.classList.remove("show");
-        sidebar.classList.remove("show");
-        hamburger.classList.remove("open");
+        let e = document.querySelector(".sidebar-overlay"),
+          o = document.querySelector(".sidebar"),
+          t = document.querySelector(".hamburger");
+        e.classList.remove("show"),
+          o.classList.remove("show"),
+          t.classList.remove("open");
       }
+      document.addEventListener("DOMContentLoaded", () => {
+        let e = "true" === localStorage.getItem("darkMode");
+        e && document.body.classList.add("dark-mode"),
+          document
+            .querySelectorAll(".toggle-switch input[type='checkbox']")
+            .forEach((o) => {
+              o.checked = e;
+            });
+      });
     </script>
   </head>
 
@@ -353,6 +314,7 @@
     </div>
 
     <!-- Main Content Container -->
+
     <div class="container">
       <section>
         <h2>About Us</h2>
@@ -360,45 +322,74 @@
           Echo Flow is an innovative platform designed to make communication
           easier through seamless voice-to-voice interactions. Our mission is to
           enable users to communicate naturally, without the need for
-          complicated tools or interfaces. Echo Flow utilizes advanced speech
-          processing technology to accurately capture and respond to user input,
-          ensuring an immersive experience across various scenarios.
+          complicated tools or interfaces. By leveraging cutting-edge speech
+          processing technology and advanced artificial intelligence, Echo Flow
+          accurately captures and responds to user input, ensuring an immersive
+          and intuitive experience across various scenarios. Whether you're
+          looking to enhance productivity, improve accessibility, or simply
+          enjoy a more natural way to interact with technology, Echo Flow is
+          dedicated to breaking down barriers and connecting people through the
+          power of voice. We believe that communication should be effortless and
+          that technology should adapt to you—not the other way around.
         </p>
       </section>
 
       <section>
         <h2>Privacy Policy</h2>
         <p>
-          At Echo Flow, we are committed to protecting your privacy. We only
-          collect data necessary to provide our services and improve user
-          experience. We do not share or sell your personal information to third
-          parties without your explicit consent. Any voice data processed
-          through Echo Flow is handled securely, with data encryption and strict
-          access controls to ensure confidentiality.
+          At Echo Flow, we are deeply committed to protecting your privacy and
+          ensuring the security of your personal information. We understand the
+          importance of keeping your data confidential, and we take this
+          responsibility very seriously. Importantly, we do not store any of
+          your data on our servers. All voice inputs and interactions are
+          directly sent to our custom GPT model for processing in real-time,
+          without being recorded or stored. This means that your conversations
+          remain entirely confidential and ephemeral. We utilize robust data
+          encryption protocols during transmission to safeguard your information
+          from unauthorized access. Our infrastructure is designed with privacy
+          in mind, ensuring that your voice data is processed securely and then
+          immediately discarded. We are dedicated to providing you with a secure
+          platform where you can communicate freely, knowing that your privacy
+          is fully protected and that your data is never stored or shared.
         </p>
       </section>
 
       <section>
         <h2>Terms of Service</h2>
         <p>
-          By using Echo Flow, you agree to comply with our terms of service. You
-          agree to use the platform responsibly and in accordance with
-          applicable laws. Echo Flow grants you a non-exclusive, limited license
-          to use our services for personal, non-commercial purposes.
-          Unauthorized use, modification, or reverse engineering of our software
-          is strictly prohibited.
+          By using Echo Flow, you agree to comply with our terms of service,
+          which are designed to ensure a safe and respectful environment for all
+          users. You agree to use the platform responsibly and in accordance
+          with all applicable laws and regulations. Echo Flow grants you a
+          non-exclusive, limited license to use our services for personal,
+          non-commercial purposes. You agree not to misuse our services or
+          assist anyone else in doing so. This includes refraining from any
+          activities that could harm our platform, interfere with other users,
+          or violate any laws. Unauthorized use, modification, distribution, or
+          reverse engineering of our software is strictly prohibited. We reserve
+          the right to suspend or terminate your access to Echo Flow if you
+          violate these terms or engage in any activity that compromises the
+          integrity or security of our services. We encourage you to read the
+          full Terms of Service to understand your rights and obligations when
+          using Echo Flow.
         </p>
       </section>
 
       <section>
         <h2>Contact Us</h2>
         <p>
-          We value your feedback and are here to answer any questions. For
-          inquiries, support, or feedback, please reach out to us at
+          We value your feedback and are here to answer any questions or address
+          any concerns you may have. Your insights and suggestions are
+          invaluable to us as they help us improve our services and provide you
+          with the best possible experience. For inquiries, support, or
+          feedback, please do not hesitate to reach out to us at
           <a class="email-link" href="mailto:yasasvigumma@gmail.com"
             >yasasvigumma@gmail.com</a
-          >. Our team is dedicated to ensuring you have the best experience with
-          Echo Flow and will respond to your queries as soon as possible.
+          >. Our dedicated support team is committed to responding to your
+          queries promptly and thoroughly. Whether you have technical questions,
+          need assistance, or want to share your thoughts on how we can enhance
+          Echo Flow, we are here to listen and assist. Your satisfaction is our
+          top priority, and we are always eager to hear from you.
         </p>
       </section>
     </div>
