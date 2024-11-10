@@ -1,116 +1,46 @@
-# V2V
+# Echo Flow (V2V)
 
-A voice to voice bot that gets responce from chatgpt.
+Echo Flow (also known as V2V) is an advanced voice-to-voice application developed in Go, leveraging Google’s Text-to-Speech API and OpenAI’s ChatGPT API for interactive, conversational experiences. Designed for accessibility and ease of use, Echo Flow allows users to have two-way audio interactions with AI.
 
-## Requirments
+## Features
 
-- Bun or node.js
-- Dotenv
-- Open AI
-- Elysia and ELysiajs/core
+- **Voice-to-Voice Conversations**: Speak your questions and get responses in real-time.
+- **Powered by Google TTS**: Clear, natural-sounding speech synthesis for seamless conversations.
+- **Enhanced AI Responses**: Uses ChatGPT for accurate and engaging conversational replies.
+- **Dark Mode Support**: Toggle between light and dark themes.
+- **Accessible UI**: Clean, mobile-friendly interface with large buttons for easy navigation.
 
-## Code
+## Installation
 
-First we need to create an api using Bun and elysia
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/username/echo-flow.git
+   cd echo-flow
+   ```
 
-``` typescript
-import {config} from "dotenv"
-import {OpenAI} from "openai"
-import {Elysia} from "elysia"
-import {cors} from "@elysiajs/cors"
-config()
-async function Bot(q:any) {
-    const ai = new OpenAI({apiKey:process.env.API_KEY})
-    const res = await ai.chat.completions.create({
-        model:"gpt-3.5-turbo",
-        messages:[{role:"user",content:q}]
-    })  
-    return res.choices[0].message.content
-}
-const app = new Elysia()
-    .use(cors())
-    .get("/:id",async ({params:{id}}:any) => {
-        const text = id.replace("-"," ")
-        const res = await Bot(text)
-        return res
-    })
-    .listen(5000)
-```
+2. **Set Up Environment Variables**:
+   Add the following to a `.env` file or export them in your terminal:
+   ```env
+   GOOGLE_TTS_API_KEY=<your_google_tts_api_key>
+   OPENAI_API_KEY=<your_openai_api_key>
+   ```
 
-Next we need to create a html file which will be our main code
+3. **Run the Application**:
+   ```bash
+   make
+   ```
 
-``` html
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V2V</title>
-    <script defer>
-        var speech = true; 
-        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; 
-        const recognition = new SpeechRecognition(); 
-        recognition.interimResults = true; 
-        const words = document.querySelector('.words');
-        recognition.addEventListener('result', e => { 
-        const transcript = Array.from(e.results) 
-                .map(result => result[0]) 
-                .map(result => result.transcript) 
-                .join('') 
-        document.getElementById("p").innerHTML = transcript;
-        });
-        if (speech == true) { 
-            recognition.start(); 
-            recognition.addEventListener('end', recognition.start); 
-        }
-        const clicked = async () => {
-            txtbox = document.getElementById("p")
-            const text = txtbox.innerHTML
-            txtbox.innerHTML = await convert(text)
-        }
+## Usage
 
-        const convert = async(text) => {
-            let result
-            let url = text.replaceAll(" ","-")
-            console.log(url)
-            await fetch(`http://localhost:5000/${url}-under-3-lines`)
-            .then(res => res.text())
-            .then(data => {
-                result = data
-            })
-            console.log(result)
-            const uttrence = new SpeechSynthesisUtterance(result)
-            uttrence.rate = 1
-            console.log(uttrence)
-            speechSynthesis.speak(uttrence)
-            return result
-        }
-    </script>
-</head>
-<body>
-    <div style="text-align: center;">
-        <h1>Voice to Voice</h1>
-        <div class="words" contenteditable>
-            <p id="p"></p>
-        </div>
-        <button onclick="clicked()">Send</button>
-    </div>
-</body>
-</html>
-```
+- **Record & Send**: Press the record button to speak your message. Upon release, Echo Flow will process your speech input and send it to ChatGPT.
+- **Receive Response**: Listen to the AI-generated response using Google’s TTS. You can also toggle options like edit mode and dark mode.
 
-And there you have it, you have successfully created Voice to Voice Bot.
+## Dependencies
 
-> Note : There are a few issues with speechSynthesis (it may or may not work properly).
+- **Go**: Latest stable version.
+- **Google TTS API**: For text-to-speech functionalities.
+- **OpenAI GPT API**: For conversational AI responses.
 
-## To run this project
+## License
 
-First run this command in your terminal or command prompt from this directory.
-
-> Note : Make sure to install [bun.js](https://bun.sh/)
-
-``` bash
-    bun run index.ts
-```
-
-After running this command copy `index.html` path and past it in your browser.
+MIT License.
