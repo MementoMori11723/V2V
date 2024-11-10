@@ -1,0 +1,43 @@
+{
+  "name": "Echo Flow",
+  "short_name": "EchoFlow",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f2a65a",
+  "theme_color": "#f2a65a",
+  "description": "Voice to Voice",
+  "categories": [
+    "productivity",
+    "audio"
+  ],
+  "icons": [
+    {
+      "src": "/assets/icons/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en-US",
+  "form_factor": "wide"
+}
