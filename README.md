@@ -55,6 +55,17 @@ Echo Flow (also known as V2V) is an advanced voice-to-voice application develope
 - **Google TTS API**: For text-to-speech functionalities.
 - **OpenAI GPT API**: For conversational AI responses.
 
+## Output preview
+
+### Light Mode
+![Light Mode](images/before-1.png)
+
+### Dark Mode
+![Dark Mode](images/before-2.png)
+
+### After Response
+![After Response](images/after.png)
+
 ## License
 
 MIT License.

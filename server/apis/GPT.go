@@ -29,7 +29,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 		Messages: []gptType{
       {
         Role:    "system",
-        Content: "Your name is Echo Flow, and you are a chatbot. You are designed to help users with their queries. How can I help you today?",
+        Content: "Your name is Echo Flow, and you are a chatbot. You are designed to help users with their queries. How can I help you today?, also you can only respond in paragraph style text only, you can't respond in markdown or html",
       },
 			{
 				Role:    "user",

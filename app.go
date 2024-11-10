@@ -14,6 +14,16 @@ func main() {
     Addr:    ":" + PORT,
     Handler: Server,
   }
-  log.Println("Server started at http://localhost:" + PORT)
-  mux.ListenAndServe()
+  log.Println("Server started")
+  log.Println(
+    "live on http://localhost:" + 
+    PORT,
+  )
+  err := mux.ListenAndServe()
+  if err != nil {
+    log.Println(
+      "Error Starting server : ", 
+      err,
+    )
+  }
 }
