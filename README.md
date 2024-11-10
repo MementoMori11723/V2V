@@ -21,10 +21,24 @@ Echo Flow (also known as V2V) is an advanced voice-to-voice application develope
 2. **Set Up Environment Variables**:
    Add the following to a `.env` file or export them in your terminal:
    ```env
-   GOOGLE_TTS_API_KEY=<your_google_tts_api_key>
-   OPENAI_API_KEY=<your_openai_api_key>
+   TTS_API_KEY=<your_google_tts_api_key>
+   GPT_API_KEY=<your_openai_api_key>
    ```
+   or 
 
+   ```bash
+   export TTS_API_KEY=<your_google_tts_api_key>
+   export GPT_API_KEY=<your_openai_api_key>
+   ```
+    you can also add port number to the env file or export it in the terminal
+    ```env
+    PORT=8080
+    ```
+    or
+    ```bash
+    export PORT=8080
+    ```
+    
 3. **Run the Application**:
    ```bash
    make
