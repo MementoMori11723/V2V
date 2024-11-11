@@ -62,6 +62,7 @@ func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
 	}
 
 	w.WriteHeader(statusCode)
+  w.Header().Set("Location", "/error")
 
 	data := errorMessage{
 		Title:        fmt.Sprintf("%d Error", statusCode),
@@ -103,6 +104,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// this is /about endpoint
 func about(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/about" {
 		HTMLError(w, errors.New("404 page not found"), http.StatusNotFound)

@@ -6,58 +6,87 @@
     <meta name="description" content="Voice to Voice" />
     <meta name="keywords" content="Voice to Voice" />
     <meta name="author" content="Voice to Voice" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="//cdnjs.cloudflare.com" />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      as="style"
+    />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <title>{{.Title}}</title>
     <style>
+      @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css);
+
       body {
-        font-family: Arial, sans-serif;
-        text-align: center;
+        font-family: Poppins, Arial, sans-serif;
         padding: 20px;
+        display: flex;
+        min-height: 93vh;
+        justify-content: center;
+        align-items: center;
         transition:
-          background-color 0.3s,
+          background 0.3s,
           color 0.3s;
       }
 
       .error-container {
-        margin-top: 50px;
+        margin-top: 10px;
       }
 
-      .status-code {
-        font-size: 100px;
-        transition: color 0.3s;
-      }
-
-      .message {
-        font-size: 20px;
+      a {
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 5px;
         transition: color 0.3s;
       }
 
       body.light-mode {
-        background-color: #f4f4f9;
-        color: #333;
+        background: linear-gradient(135deg, #ecba82, #f2a65a);
+        color: #353238;
       }
 
       .light-mode .status-code {
-        color: #e74c3c;
+        font-size: 100px;
+        color: #c21706;
+      }
+
+      .light-mode .message {
+        font-size: 20px;
+        color: #353238;
+      }
+
+      .light-mode a {
+        color: #ecba82;
+        background-color: #2e2a27;
       }
 
       body.dark-mode {
-        background-color: #1c1c1c;
-        color: #f4f4f9;
+        background: linear-gradient(135deg, #353238, #2e2a27);
+        color: #ecba82;
       }
 
       .dark-mode .status-code {
+        font-size: 100px;
         color: #c0392b;
+      }
+
+      .dark-mode .message {
+        font-size: 20px;
+        color: #ecba82;
+      }
+
+      .dark-mode a {
+        color: #353238;
+        background-color: #f2a65a;
       }
     </style>
 
     <script>
       function applyTheme() {
-        let e = window.matchMedia("(prefers-color-scheme: dark)").matches,
-          d =
-            "true" === localStorage.getItem("darkMode") ||
-            (!localStorage.getItem("darkMode") && e);
-        d
+        let e = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        "true" === localStorage.getItem("darkMode") ||
+        (!localStorage.getItem("darkMode") && e)
           ? (document.body.classList.add("dark-mode"),
             document.body.classList.remove("light-mode"),
             localStorage.setItem("darkMode", "true"))
@@ -65,14 +94,23 @@
             document.body.classList.remove("dark-mode"),
             localStorage.setItem("darkMode", "false"));
       }
-      document.addEventListener("DOMContentLoaded", applyTheme);
+      (window.onload = function () {
+        "/error" !== window.location.pathname &&
+          window.history.replaceState(null, "", "/error");
+      }),
+        document.addEventListener("DOMContentLoaded", applyTheme);
     </script>
   </head>
 
   <body>
     <div class="error-container">
-      <div class="status-code">{{.StatusCode}}</div>
-      <div class="message">{{.ErrorMessage}}</div>
+      <center>
+        <div class="status-code">{{.StatusCode}}</div>
+        <br />
+        <div class="message">{{.ErrorMessage}}</div>
+        <br />
+        <a href="/">Go back to Home</a>
+      </center>
     </div>
   </body>
 </html>
