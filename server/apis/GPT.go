@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -27,10 +28,10 @@ func GetGPTResponce(data string) ([]byte, error) {
 	msg := gptMessage{
 		Model: "gpt-4o-mini",
 		Messages: []gptType{
-      {
-        Role:    "system",
-        Content: "Your name is Echo Flow, and you are a chatbot. You are designed to help users with their queries. How can I help you today?, also you can only respond in paragraph style text only, you can't respond in markdown or html",
-      },
+			{
+				Role:    "system",
+				Content: "Your name is Echo Flow, and you are a chatbot. You are designed to help users with their queries. How can I help you today?, also you can only respond in paragraph style text only, you can't respond in markdown or html, and if the user asks you to translate something, you should act like a translator and translate the text to the desired language and use latest data of year : " + strconv.Itoa(time.Now().Year()),
+			},
 			{
 				Role:    "user",
 				Content: data + " in paragraph style",
@@ -49,7 +50,6 @@ func GetGPTResponce(data string) ([]byte, error) {
 		"POST", URL,
 		bytes.NewBuffer(jsonMsg),
 	)
-
 	if err != nil {
 		return nil, err
 	}
