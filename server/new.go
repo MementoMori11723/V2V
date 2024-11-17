@@ -7,6 +7,7 @@ import (
 
 var (
 	Path   = "server/pages/"
+  layout = Path + "layout.html"
 	routes = map[string]func(http.ResponseWriter, *http.Request){
 		"/":         home,
     "/about":    about,
