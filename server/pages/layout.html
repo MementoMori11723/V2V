@@ -2,14 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title></title>
+    <title>{{ template "title" . }}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="description" content="Voice to Voice" />
     <meta name="keywords" content="Voice to Voice" />
     <meta name="author" content="Voice to Voice" />
-    <title>{{template "title" .}}</title>
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
     <link rel="preconnect" href="//cdnjs.cloudflare.com" />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
@@ -21,11 +20,11 @@
     <link rel="manifest" href="/assets/manifest.json" />
     <link rel="apple-touch-icon" href="/assets/icons/apple-icon-180.png" />
     <meta name="mobile-web-app-capable" content="yes" />
-    {{template "header" .}}
+    {{ template "header" . }}
   </head>
 
   <body>
-    {{template "content" .}}
+    {{ template "content" . }}
   </body>
 </html>
 
