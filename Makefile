@@ -6,7 +6,6 @@ build:
 
 run:
 	@echo "Running the program..."
-	@make build
 	@./app
 
 clean:
