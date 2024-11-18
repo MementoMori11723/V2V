@@ -51,9 +51,10 @@ func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
 		StatusCode   int
 	}
 
-	temp, err := template.ParseFiles(
-    layout, Path + "error.html",
-	)
+	temp, err := template.ParseFS(
+    Path, pathName + layout,
+    pathName + "error.html",
+  )
 	if err != nil {
 		http.Error(
 			w, err.Error(),
@@ -85,10 +86,10 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	temp, err := template.ParseFiles(
-    layout, Path +
-			"index.html",
-	)
+	temp, err := template.ParseFS(
+    Path, pathName + layout,
+    pathName + "index.html",
+  )
 	if err != nil {
 		http.Error(
 			w, err.Error(),
@@ -111,10 +112,10 @@ func about(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	temp, err := template.ParseFiles(
-    layout, Path +
-			"about.html",
-	)
+	temp, err := template.ParseFS(
+    Path, pathName + layout,
+    pathName + "about.html",
+  )
 	if err != nil {
 		http.Error(
 			w, err.Error(),

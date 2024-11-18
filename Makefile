@@ -6,7 +6,7 @@ build:
 
 run:
 	@echo "Running the program..."
-	if [ ! -f app ]; then make build; fi
+	@make build
 	@./app
 
 clean:
