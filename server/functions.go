@@ -31,6 +31,7 @@ type responceMessage struct {
 
 // Default error handler (returns JSON)
 func Error(w http.ResponseWriter, err error, statusCode int) {
+  log.Println("In error json")
 	type errorMessage struct {
 		Error string `json:"error"`
 	}
@@ -45,6 +46,7 @@ func Error(w http.ResponseWriter, err error, statusCode int) {
 
 // Default error handler (returns HTML)
 func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
+  log.Println("In error html")
 	type errorMessage struct {
 		Title        string
 		ErrorMessage string
@@ -81,6 +83,7 @@ func HTMLError(w http.ResponseWriter, Err error, statusCode int) {
 
 // this is / endpoint
 func home(w http.ResponseWriter, r *http.Request) {
+  log.Println("In home function")
 	if r.URL.Path != "/" {
 		HTMLError(w, errors.New("404 page not found"), http.StatusNotFound)
 		return
@@ -107,6 +110,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 // this is /about endpoint
 func about(w http.ResponseWriter, r *http.Request) {
+  log.Println("In About function")
 	if r.URL.Path != "/about" {
 		HTMLError(w, errors.New("404 page not found"), http.StatusNotFound)
 		return
@@ -133,7 +137,9 @@ func about(w http.ResponseWriter, r *http.Request) {
 
 // this is /api endpoint
 func api(w http.ResponseWriter, r *http.Request) {
+  log.Println("In api function")
 	body, err := io.ReadAll(r.Body)
+  log.Println(body)
 	defer r.Body.Close()
 	if err != nil {
 		Error(w, err, http.StatusNotFound)
@@ -150,6 +156,7 @@ func api(w http.ResponseWriter, r *http.Request) {
 
 	data, err := apis.GetGPTResponce(string(body))
 	if err != nil {
+    log.Println(err.Error())
 		Error(w, err, http.StatusNotFound)
 		return
 	}
@@ -157,10 +164,12 @@ func api(w http.ResponseWriter, r *http.Request) {
 	var result responceMessage
 	err = json.Unmarshal(data, &result)
 	if err != nil {
+    log.Println(err.Error())
 		Error(w, err, http.StatusNotFound)
 		return
 	}
 
+  log.Println(result)
 	content := result.Choices[0].Message.Content
 	audioFile, err := apis.GetTTSResponse(content)
 	if err != nil {

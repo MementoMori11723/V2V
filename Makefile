@@ -1,21 +1,6 @@
-default_goal: run
+run :
+	@docker-compose -f compose.yml build
+	@docker-compose -f compose.yml up -d
 
-build:
-	@echo "Building the program..."
-	@go build -tags netgo -ldflags="-s -w" -o app .
-
-run:
-	@echo "Running the program..."
-	@./app
-
-clean:
-	@echo "Cleaning up..."
-	@rm -f app
-
-help:
-	@echo "Usage: make [build|run|clean]"
-	@echo "  build: Build the program"
-	@echo "  run: Run the program"
-	@echo "  clean: Clean up"
-
-.PHONY: build run clean
+stop :
+	@docker-compose -f compose.yml down --remove-orphans

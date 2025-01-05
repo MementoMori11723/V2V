@@ -3,6 +3,7 @@ package server
 import (
 	"V2V/server/middleware"
 	"embed"
+	"log"
 	"net/http"
 )
 
@@ -20,6 +21,7 @@ var (
 )
 
 func New() http.Handler {
+  log.Println("In New Handler")
 	mux := http.NewServeMux()
 	assetsPath := http.StripPrefix(
 		"/assets/", http.FileServer(

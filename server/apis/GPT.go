@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -21,6 +22,7 @@ type gptMessage struct {
 }
 
 func GetGPTResponce(data string) ([]byte, error) {
+  log.Println("In GPT function")
 	client := &http.Client{
 		Timeout: time.Second * 10,
 	}
@@ -71,6 +73,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 
 	defer res.Body.Close()
 	body, err := io.ReadAll(res.Body)
+  log.Println(string(body))
 	if err != nil {
 		return nil, err
 	}

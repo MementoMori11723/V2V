@@ -1,0 +1,8 @@
+---
+- hosts: vps
+  tasks:
+    - name: Pull the latest changes and run the makefile
+      shell: |
+        cd ~/V2V && git pull origin master && make stop && make
+      args:
+        executable: /bin/bash

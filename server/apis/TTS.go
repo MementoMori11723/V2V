@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"time"
 )
@@ -31,6 +32,7 @@ type TTSResponse struct {
 }
 
 func GetTTSResponse(data string) ([]byte, error) {
+  log.Println("In TTS function")
   client := &http.Client{
     Timeout: time.Second * 20,
   }
