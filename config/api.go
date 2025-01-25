@@ -8,7 +8,7 @@ var GPT_API_KEY, GPT_URL, TTS_API_KEY, TTS_URL string
 
 func init() {
 	GPT_API_KEY = os.Getenv("GPT_API_KEY")
-  GPT_URL = "https://api.openai.com/v1/chat/completions"
+  GPT_URL = "https://api.deepseek.com/chat/completions"
 
 	if GPT_API_KEY == "" {
 		panic("GPT : API_KEY or URL is not set")

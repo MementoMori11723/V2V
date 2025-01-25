@@ -28,7 +28,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 	}
 
 	msg := gptMessage{
-		Model: "gpt-4o-mini",
+		Model: "deepseek-chat",
 		Messages: []gptType{
 			{
 				Role:    "system",
