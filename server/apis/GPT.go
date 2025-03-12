@@ -7,7 +7,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -30,11 +29,11 @@ func GetGPTResponce(data string) ([]byte, error) {
 	}
 
 	msg := gptMessage{
-		Model: "tinyllama",
+		Model: "smollm:135m",
 		Messages: []gptType{
 			{
 				Role:    "system",
-				Content: "Your name is Echo Flow, and you are a chatbot designed to assist users with their queries efficiently. You must always respond in a single continuous paragraph without using markdown, HTML, bullet points, headings, or special formatting. When a user requests a translation, act as a translator and provide the translated text in the desired language. Additionally, ensure that your responses reflect the most up to-date information available for the current year: " + strconv.Itoa(time.Now().Year()) + ".",
+				Content: "Your name is Echo Flow, and you are a chatbot. You are designed to help users with their queries. How can I help you today?, also you can only respond in paragraph style text only, you can't respond in markdown or html, and if the user asks you to translate something, you should act like a translator and translate the text to the desired language.",
 			},
 			{
 				Role:    "user",
@@ -42,7 +41,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 			},
 		},
 		Stream: false,
-    Raw: true,
+    Raw: false,
 	}
 
 	jsonMsg, err := json.Marshal(msg)

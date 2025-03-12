@@ -25,7 +25,6 @@ services:
       - echo_net
     command: "serve"
 
-
 networks:
   echo_net:
     driver: bridge    
