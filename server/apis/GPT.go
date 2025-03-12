@@ -20,6 +20,7 @@ type gptMessage struct {
 	Model    string    `json:"model"`
 	Messages []gptType `json:"messages"`
 	Stream   bool      `json:"stream"`
+	Raw      bool      `json:"raw"`
 }
 
 func GetGPTResponce(data string) ([]byte, error) {
@@ -29,18 +30,19 @@ func GetGPTResponce(data string) ([]byte, error) {
 	}
 
 	msg := gptMessage{
-    Model: "smollm:360m",
+		Model: "smollm:360m",
 		Messages: []gptType{
 			{
 				Role:    "system",
-				Content: "Your name is Echo Flow, and you are a chatbot. You are designed to help users with their queries. How can I help you today?, also you can only respond in paragraph style text only, you can't respond in markdown or html, and if the user asks you to translate something, you should act like a translator and translate the text to the desired language and use latest data of year : " + strconv.Itoa(time.Now().Year()),
+				Content: "Your name is Echo Flow, and you are a chatbot designed to assist users with their queries efficiently. You must always respond in a single continuous paragraph without using markdown, HTML, bullet points, headings, or special formatting. When a user requests a translation, act as a translator and provide the translated text in the desired language. Additionally, ensure that your responses reflect the most up to-date information available for the current year: " + strconv.Itoa(time.Now().Year()) + ".",
 			},
 			{
 				Role:    "user",
-				Content: data + " in paragraph style",
+				Content: data + " (only in plaintext formate)",
 			},
 		},
 		Stream: false,
+		Raw:    false,
 	}
 
 	jsonMsg, err := json.Marshal(msg)

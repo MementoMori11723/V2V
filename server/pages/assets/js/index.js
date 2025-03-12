@@ -62,7 +62,7 @@ function send() {
             (i.style.display = "block");
           return;
         }
-        (n.innerText = e.message), (t.src = e.audioMessage);
+        (n.innerText = html), (t.src = e.audioMessage);
       })
       .catch((e) => {
         (n.innerText = "Result will be displayed here"),
