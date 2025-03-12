@@ -19,16 +19,17 @@ type gptType struct {
 type gptMessage struct {
 	Model    string    `json:"model"`
 	Messages []gptType `json:"messages"`
+	Stream   bool      `json:"stream"`
 }
 
 func GetGPTResponce(data string) ([]byte, error) {
-  log.Println("In GPT function")
+	log.Println("In GPT function")
 	client := &http.Client{
-		Timeout: time.Second * 10,
+		Timeout: time.Second * 60,
 	}
 
 	msg := gptMessage{
-		Model: "deepseek-chat",
+		Model: "qwen2.5:1.5b",
 		Messages: []gptType{
 			{
 				Role:    "system",
@@ -39,6 +40,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 				Content: data + " in paragraph style",
 			},
 		},
+		Stream: false,
 	}
 
 	jsonMsg, err := json.Marshal(msg)
@@ -46,10 +48,10 @@ func GetGPTResponce(data string) ([]byte, error) {
 		return nil, err
 	}
 
-	API_KEY, URL := config.GetGptApiDetails()
+	URL := config.GetGptApiDetails()
 
 	req, err := http.NewRequest(
-		"POST", URL,
+		"POST", URL+"/chat",
 		bytes.NewBuffer(jsonMsg),
 	)
 	if err != nil {
@@ -61,11 +63,6 @@ func GetGPTResponce(data string) ([]byte, error) {
 		"application/json",
 	)
 
-	req.Header.Set(
-		"Authorization",
-		"Bearer "+API_KEY,
-	)
-
 	res, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -73,7 +70,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 
 	defer res.Body.Close()
 	body, err := io.ReadAll(res.Body)
-  log.Println(string(body))
+	log.Println(string(body))
 	if err != nil {
 		return nil, err
 	}

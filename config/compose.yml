@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: ../  
+      dockerfile: config/Dockerfile
+    container_name: echo_flow
+    working_dir: /app
+    networks:
+      - echo_net
+    env_file:
+      - ../app.env
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: echo_ai
+    expose:
+      - "11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - echo_net
+    command: "serve & ollama pull qwen2.5:1.5b && echo 'Image pulled'"
+
+
+networks:
+  echo_net:
+    driver: bridge    
+
+volumes:
+  ollama_data:
+
