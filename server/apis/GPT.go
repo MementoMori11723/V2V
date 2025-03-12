@@ -30,7 +30,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 	}
 
 	msg := gptMessage{
-		Model: "smollm:360m",
+		Model: "tinyllama",
 		Messages: []gptType{
 			{
 				Role:    "system",
