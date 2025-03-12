@@ -1,7 +1,7 @@
 run :
-	@docker-compose -f config/compose.yml build
-	@docker-compose -f config/compose.yml up -d
+	@docker-compose -f config/compose.yml -p echo-flow build
+	@docker-compose -f config/compose.yml -p echo-flow up -d
 	@docker exec echo_ai bash -c "ollama pull qwen2.5:1.5b"
 
 stop :
-	@docker-compose -f config/compose.yml down --remove-orphans
+	@docker-compose -f config/compose.yml -p echo-flow down --remove-orphans
