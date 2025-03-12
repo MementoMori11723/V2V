@@ -42,6 +42,7 @@ func GetGPTResponce(data string) ([]byte, error) {
 			},
 		},
 		Stream: false,
+    Raw: true,
 	}
 
 	jsonMsg, err := json.Marshal(msg)
