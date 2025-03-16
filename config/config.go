@@ -16,7 +16,7 @@ func init() {
 		log.Printf("PORT is not set. Defaulting to 8080")
 		PORT = "8080"
 	}
-	GPT_URL = "http://echo_ai:11434/api"
+	GPT_URL = "http://ollama-ai:11434/api"
 	TTS_API_KEY = os.Getenv("TTS_API_KEY")
 	TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
 	if TTS_API_KEY == "" {

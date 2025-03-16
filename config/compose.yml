@@ -6,28 +6,15 @@ services:
     container_name: echo_flow
     working_dir: /app
     networks:
-      - echo_net
+      - deploy_net
     env_file:
       - ../app.env
     expose:
       - "5000"
-    ports:
-      - "5000:5000"
-
-  ollama:
-    image: ollama/ollama:latest
-    container_name: echo_ai
-    expose:
-      - "11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    networks:
-      - echo_net
-    command: "serve"
 
 networks:
-  echo_net:
-    driver: bridge    
+  deploy_net:
+    external: true
 
 volumes:
   ollama_data:
